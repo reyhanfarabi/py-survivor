@@ -1,8 +1,9 @@
 from src.app import App
+from src import constants
 
 
 def main() -> None:
-  app = App(800, 600, 'Py Survivor', 60)
+  app = App(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.APP_NAME, constants.FPS)
   
   try:
     app.run()

@@ -1,4 +1,5 @@
 import pygame
+from .game import Game
 
 
 class App:
@@ -12,12 +13,22 @@ class App:
     self.running = True
     self.screen = pygame.display.set_mode((self.SCREEN_WIDTH, self.SCREEN_HEIGHT))
     pygame.display.set_caption(self.APP_NAME)
+    self.game = Game()
+  
   
   def run(self) -> None:
     while self.running:
+      self.screen.fill('black')
+      
       for event in pygame.event.get():
         if event.type == pygame.QUIT:
           self.running = False
+      
+      # this will update game logic
+      self.game.update(self.delta_time)
+      
+      # this will draw screen after logic update
+      self.game.draw(self.screen)
       
       # update the entire screen      
       pygame.display.flip()
