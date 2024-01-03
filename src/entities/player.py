@@ -1,11 +1,12 @@
 import pygame
 from .entity import Entity
 from src import constants
+from src.components.sprite import Sprite
 
 
 class Player(Entity):
-  def __init__(self, sprite_path: str, sprite_at: pygame.Rect, position: pygame.Vector2, speed: int) -> None:
-    super().__init__(sprite_path, sprite_at, position, speed)
+  def __init__(self, sprite: Sprite, position: pygame.Vector2, speed: int) -> None:
+    super().__init__(sprite, position, speed)
   
   
   def update(self, dt: float):
