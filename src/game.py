@@ -1,8 +1,7 @@
 from pygame import Rect, Surface, Vector2
-from .entities.player import Player
-from .entities.enemy import Enemy
-from .components.enemy_spawner import EnemySpawner
-from src.components.sprite import Sprite
+from src.entities.player import Player
+from src.module.enemy_spawner import EnemySpawner
+from src.module.sprite import Sprite
 
 
 class Game():

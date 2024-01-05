@@ -1,7 +1,7 @@
 from src.entities.enemy import Enemy
 from src.entities.player import Player
-from .sprite import Sprite
 from src import utils
+from .sprite import Sprite
 
 
 class EnemySpawner():

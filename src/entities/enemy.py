@@ -2,7 +2,7 @@ from pygame import Surface, Vector2
 from .entity import Entity
 from .player import Player
 from src import utils
-from src.components.sprite import Sprite
+from src.module.sprite import Sprite
 
 
 class Enemy(Entity):

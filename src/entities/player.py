@@ -1,7 +1,7 @@
 import pygame
 from .entity import Entity
 from src import constants
-from src.components.sprite import Sprite
+from src.module.sprite import Sprite
 
 
 class Player(Entity):
