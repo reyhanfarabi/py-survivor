@@ -1,6 +1,7 @@
 from pygame import Rect, Surface, Vector2
 from .entities.player import Player
 from .entities.enemy import Enemy
+from .components.enemy_spawner import EnemySpawner
 from src.components.sprite import Sprite
 
 
@@ -11,19 +12,26 @@ class Game():
       Vector2(100, 100),
       100
     )
-    self.enemy = Enemy(
-      Sprite('assets/enemies/slime/slime_idle.png', Rect(0, 0, 32, 32)), 
-      Vector2(100, 200), 
-      50, 
+    self.spawner = EnemySpawner(
+      Sprite('assets/enemies/slime/slime_idle.png', Rect(0, 0, 32, 32)),
+      20,
       self.player
     )
+    
+    self.spawner.spawn_with_amount(10)
   
   
   def update(self, dt: float) -> None:
     self.player.update(dt)
-    self.enemy.update(dt)
+    
+    # update enemies logic
+    for enemy in self.spawner.enemies_container:
+      enemy.update(dt)
   
   
   def draw(self, screen: Surface) -> None:
     self.player.draw(screen)
-    self.enemy.draw(screen)
+
+    # draw enemies
+    for enemy in self.spawner.enemies_container:
+      enemy.draw(screen)

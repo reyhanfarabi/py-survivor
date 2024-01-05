@@ -1,5 +1,7 @@
 from pygame import Vector2
 import math
+import random
+from .constants import *
 
 
 def get_distance_between_vector(origin_position: Vector2, position: Vector2) -> float:
@@ -15,3 +17,10 @@ def is_collided(origin_position: Vector2, origin_size: tuple, target_position: V
     origin_center_pos.y >= target_position.y and
     origin_center_pos.y <= target_position.y + target_size[1]
   )
+
+
+# this function will generate a random location within the game area as a Vector2
+def generate_random_location() -> Vector2:
+  x = random.randrange(0, SCREEN_WIDTH)
+  y = random.randrange(0, SCREEN_HEIGHT)
+  return Vector2(x, y)

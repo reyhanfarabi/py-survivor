@@ -14,7 +14,6 @@ class Enemy(Entity):
   
   def update(self, dt: float) -> None:
     self.move_to_player(dt, self.player.position)
-    print(utils.is_collided(self.position, self.sprite.rect_size, self.player.position, self.player.sprite.rect_size))
   
   
   def draw(self, screen: Surface) -> None:
