@@ -1,6 +1,6 @@
 from pygame import Surface, Vector2
 from abc import ABC, abstractmethod
-from src.components.sprite import Sprite
+from src.module.sprite import Sprite
 
 
 class Entity(ABC):
