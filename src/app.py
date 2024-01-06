@@ -4,6 +4,7 @@ from .game import Game
 
 class App:
   def __init__(self, screen_width: int, screen_height: int, app_name: str, fps: int) -> None:
+    pygame.init()
     self.SCREEN_WIDTH = screen_width
     self.SCREEN_HEIGHT = screen_height
     self.APP_NAME = app_name
@@ -16,7 +17,7 @@ class App:
     self.game = Game()
   
   
-  def run(self) -> None:
+  def run(self) -> None:    
     while self.running:
       self.screen.fill('black')
       
