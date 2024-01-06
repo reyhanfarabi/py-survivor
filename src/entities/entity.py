@@ -9,6 +9,7 @@ class Entity(ABC):
     self.sprite = sprite
     self.position = position
     self.speed = speed
+    self.health = 100
   
   
   @abstractmethod
