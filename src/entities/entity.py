@@ -4,12 +4,15 @@ from src.module.sprite import Sprite
 
 
 class Entity(ABC):
-  def __init__(self, sprite: Sprite, position: Vector2, speed: int) -> None:
+  def __init__(self, sprite: Sprite, position: Vector2, speed: int, attack: int) -> None:
     super().__init__()
     self.sprite = sprite
     self.position = position
+    
+    # stats
     self.speed = speed
     self.health = 100
+    self.attack = attack
   
   
   @abstractmethod
