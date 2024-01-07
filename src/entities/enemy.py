@@ -1,5 +1,6 @@
 from pygame import Surface, Vector2
 import time
+import random
 
 from src import utils
 from src.entities.entity import Entity
@@ -14,6 +15,8 @@ class Enemy(Entity):
     self.player = player
     self.target_distance_padding = 0.2
     self.attack_delay = time.time() + 2
+    self.speed_rand_factor = 3
+    self.new_speed = random.randrange(self.stats.get_speed() - self.speed_rand_factor, self.stats.get_speed() + self.speed_rand_factor)
   
   
   def update(self, dt: float) -> None:
@@ -29,7 +32,7 @@ class Enemy(Entity):
     direction = (player_pos - self.position).normalize()
 
     if utils.get_distance_between_vector(self.position, player_pos) > self.target_distance_padding:
-      self.position += direction * self.stats.get_speed() * dt
+      self.position += direction * self.new_speed * dt
   
   
   def attack_player(self) -> None:
