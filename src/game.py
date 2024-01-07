@@ -1,5 +1,7 @@
 from pygame import Rect, Surface, Vector2
+
 from src.entities.player import Player
+from src.entities.stats import Stats
 from src.module.enemy_spawner import EnemySpawner
 from src.module.sprite import Sprite
 
@@ -9,11 +11,11 @@ class Game():
     self.player = Player(
       Sprite('assets/hooded_protagonist/spritesheets.png', Rect(0, 0, 32, 32)), 
       Vector2(100, 100),
-      100
+      Stats(10, 100, 100)
     )
     self.spawner = EnemySpawner(
       Sprite('assets/enemies/slime/slime_idle.png', Rect(0, 0, 32, 32)),
-      20,
+      Stats(1, 10, 20),
       self.player
     )
     

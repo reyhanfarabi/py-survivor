@@ -1,14 +1,16 @@
 from pygame import Surface, Vector2
 import time
-from .entity import Entity
-from .player import Player
+
 from src import utils
+from src.entities.entity import Entity
+from src.entities.stats import Stats
+from src.entities.player import Player
 from src.module.sprite import Sprite
 
 
 class Enemy(Entity):
-  def __init__(self, sprite: Sprite, position: Vector2, speed: int, player: Player) -> None:
-    super().__init__(sprite, position, speed, 1)
+  def __init__(self, sprite: Sprite, position: Vector2, stats: Stats, player: Player) -> None:
+    super().__init__(sprite, position, stats)
     self.player = player
     self.target_distance_padding = 0.2
     self.attack_delay = time.time() + 2
@@ -27,11 +29,11 @@ class Enemy(Entity):
     direction = (player_pos - self.position).normalize()
 
     if utils.get_distance_between_vector(self.position, player_pos) > self.target_distance_padding:
-      self.position += direction * self.speed * dt
+      self.position += direction * self.stats.get_speed() * dt
   
   
   def attack_player(self) -> None:
     if utils.is_collided(self.position, self.sprite.rect_size, self.player.position, self.player.sprite.rect_size):
       if time.time() > self.attack_delay:
-        self.player.take_damage(self.attack)
+        self.player.take_damage(self.stats.get_attack())
         self.attack_delay = time.time() + 2
