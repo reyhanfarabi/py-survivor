@@ -1,18 +1,16 @@
 from pygame import Surface, Vector2
 from abc import ABC, abstractmethod
+
+from .stats import Stats
 from src.module.sprite import Sprite
 
 
 class Entity(ABC):
-  def __init__(self, sprite: Sprite, position: Vector2, speed: int, attack: int) -> None:
+  def __init__(self, sprite: Sprite, position: Vector2, stats: Stats) -> None:
     super().__init__()
     self.sprite = sprite
     self.position = position
-    
-    # stats
-    self.speed = speed
-    self.health = 100
-    self.attack = attack
+    self.stats = stats
   
   
   @abstractmethod
