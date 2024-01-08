@@ -2,6 +2,7 @@ import pygame
 
 from .entity import Entity
 from .stats import Stats
+from .weapon import Weapon
 from src import constants
 from src.module.sprite import Sprite
 from src.module.ui.text import Text
@@ -10,13 +11,15 @@ from src.module.ui.text import Text
 class Player(Entity):
   def __init__(self, sprite: Sprite, position: pygame.Vector2, stats: Stats) -> None:
     super().__init__(sprite, position, stats)
+    self.__weapon = Weapon(self.get_player_center_pos())
     
     # player hud attribute
     self.text_health = Text(f"HP  {str(self.stats.get_health())}", 18, (80, 40))
 
   
   def update(self, dt: float):
-    self.movement(dt)
+    self.movement(dt)    
+    self.__weapon.update(self.get_player_center_pos())
   
   
   def draw(self, screen: pygame.Surface) -> None:
@@ -25,7 +28,10 @@ class Player(Entity):
     # player hud
     self.text_health.string = f"HP  {str(self.stats.get_health())}"
     self.text_health.draw(screen)
-  
+    
+    # player weapon
+    self.__weapon.draw(screen)
+
   
   def movement(self, dt: float) -> None:
     keys = pygame.key.get_pressed()
@@ -46,3 +52,9 @@ class Player(Entity):
   def take_damage(self, damage_amount: int) -> None:
     if self.stats.get_health() > 0:
       self.stats.reduce_health(damage_amount)
+
+
+  def get_player_center_pos(self) -> pygame.Vector2:
+    return pygame.Vector2(
+      self.position.x + self.sprite.rect_size[0] / 2, self.position.y + self.sprite.rect_size[1] / 2
+    )
