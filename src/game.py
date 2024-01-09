@@ -22,7 +22,7 @@ class Game():
     
     self.spawner.spawn_with_amount(10)
     
-    # ui attributs
+    # ui attributes
     self.__kill_count = 0
     self.__text_kill_count = Text(f"Kill Count  {str(self.__kill_count)}", 18, (1470, 40))
   
