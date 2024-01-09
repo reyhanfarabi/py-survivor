@@ -4,10 +4,11 @@ from src.entities.player import Player
 from src.entities.stats import Stats
 from src.module.enemy_spawner import EnemySpawner
 from src.module.sprite import Sprite
+from src.module.ui.text import Text
 
 
 class Game():
-  def __init__(self) -> None:
+  def __init__(self) -> None:    
     self.player = Player(
       Sprite('assets/hooded_protagonist/spritesheets.png', Rect(0, 0, 32, 32)), 
       Vector2(100, 100),
@@ -20,6 +21,10 @@ class Game():
     )
     
     self.spawner.spawn_with_amount(10)
+    
+    # ui attributs
+    self.__kill_count = 0
+    self.__text_kill_count = Text(f"Kill Count  {str(self.__kill_count)}", 18, (1470, 40))
   
   
   def update(self, dt: float) -> None:
@@ -34,6 +39,9 @@ class Game():
       # check if enemy is dead
       if not enemy.is_alive:
         self.spawner.enemies_container.remove(enemy)
+        self.__kill_count += 1
+
+    self.__text_kill_count.string = f"Kill Count  {str(self.__kill_count)}"
     
   
   def draw(self, screen: Surface) -> None:
@@ -42,3 +50,6 @@ class Game():
     # draw enemies
     for enemy in self.spawner.enemies_container:
       enemy.draw(screen)
+  
+    # draw ui
+    self.__text_kill_count.draw(screen)
