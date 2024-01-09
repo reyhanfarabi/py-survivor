@@ -5,10 +5,14 @@ from src.entities.stats import Stats
 from src.module.enemy_spawner import EnemySpawner
 from src.module.sprite import Sprite
 from src.module.ui.text import Text
+from src.constants import *
 
 
 class Game():
-  def __init__(self) -> None:    
+  def __init__(self) -> None:
+    self.__kill_count = 0
+    self.__enemy_wave = 0
+     
     self.player = Player(
       Sprite('assets/hooded_protagonist/spritesheets.png', Rect(0, 0, 32, 32)), 
       Vector2(100, 100),
@@ -20,17 +24,21 @@ class Game():
       self.player
     )
     
-    self.spawner.spawn_with_amount(10)
+    self.spawn_enemy_wave()
     
     # ui attributes
-    self.__kill_count = 0
     self.__text_kill_count = Text(f"Kill Count  {str(self.__kill_count)}", 18, (1470, 40))
+    self.__text_enemy_wave = Text(f"Wave {str(self.__enemy_wave)}", 18, (750, 40))
   
   
   def update(self, dt: float) -> None:
     self.player.update(dt)
     
     self.player.attack_enemies(self.spawner.enemies_container)
+    
+    # check if all enemy is dead
+    if not self.spawner.enemies_container:
+      self.spawn_enemy_wave()
     
     # update enemies logic
     for enemy in self.spawner.enemies_container:
@@ -42,6 +50,7 @@ class Game():
         self.__kill_count += 1
 
     self.__text_kill_count.string = f"Kill Count  {str(self.__kill_count)}"
+    self.__text_enemy_wave.string = f"Wave {str(self.__enemy_wave)}"
     
   
   def draw(self, screen: Surface) -> None:
@@ -53,3 +62,9 @@ class Game():
   
     # draw ui
     self.__text_kill_count.draw(screen)
+    self.__text_enemy_wave.draw(screen)
+
+
+  def spawn_enemy_wave(self) -> None:
+    self.__enemy_wave += 1
+    self.spawner.spawn_with_amount(10)
