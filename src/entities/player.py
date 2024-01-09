@@ -1,4 +1,5 @@
 import pygame
+import time
 
 from .entity import Entity
 from .stats import Stats
@@ -11,6 +12,8 @@ from src.module.ui.text import Text
 class Player(Entity):
   def __init__(self, sprite: Sprite, position: pygame.Vector2, stats: Stats) -> None:
     super().__init__(sprite, position, stats)
+    self.__ATACK_DELAY = 1
+    self.__attack_delay_counter = time.time() + self.__ATACK_DELAY
     self.__weapon = Weapon(self.get_player_center_pos())
     
     # player hud attribute
@@ -58,3 +61,14 @@ class Player(Entity):
     return pygame.Vector2(
       self.position.x + self.sprite.rect_size[0] / 2, self.position.y + self.sprite.rect_size[1] / 2
     )
+  
+  
+  def attack_enemies(self, enemies: list):
+    for enemy in enemies:
+        self.attack(enemy)
+  
+  
+  def attack(self, enemy) -> bool:
+    if self.__weapon.can_attack(enemy) and time.time() > self.__attack_delay_counter:
+      enemy.take_damage(self.stats.get_attack())
+      self.__attack_delay_counter = time.time() + self.__ATACK_DELAY

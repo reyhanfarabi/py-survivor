@@ -17,11 +17,15 @@ class Enemy(Entity):
     self.attack_delay = time.time() + 2
     self.speed_rand_factor = 3
     self.new_speed = random.randrange(self.stats.get_speed() - self.speed_rand_factor, self.stats.get_speed() + self.speed_rand_factor)
+    self.is_alive = True
   
   
   def update(self, dt: float) -> None:
     self.move_to_player(dt, self.player.position)
     self.attack_player()
+    
+    if self.stats.get_health() <= 0:
+      self.is_alive = False
   
   
   def draw(self, screen: Surface) -> None:
@@ -40,3 +44,8 @@ class Enemy(Entity):
       if time.time() > self.attack_delay:
         self.player.take_damage(self.stats.get_attack())
         self.attack_delay = time.time() + 2
+
+
+  def take_damage(self, damage_amount: int) -> None:
+    if self.stats.get_health() > 0:
+      self.stats.reduce_health(damage_amount)

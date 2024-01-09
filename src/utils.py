@@ -1,4 +1,4 @@
-from pygame import Vector2
+from pygame import Vector2, Rect
 import math
 import random
 from .constants import *
@@ -24,3 +24,16 @@ def generate_random_location() -> Vector2:
   x = random.randrange(0, SCREEN_WIDTH)
   y = random.randrange(0, SCREEN_HEIGHT)
   return Vector2(x, y)
+
+
+def get_list_index_from_2d_list(x_index: int, x_length: int, y_index: int) -> int:
+  return x_index * x_length + y_index
+
+
+def is_vec_collide_with_rect(origin_vec: Vector2, target_rect: Rect) -> bool:
+  return (
+    origin_vec.x >= target_rect.x and
+    origin_vec.x <= target_rect.x + target_rect.width and
+    origin_vec.y >= target_rect.y and
+    origin_vec.y <= target_rect.y + target_rect.height
+  )
