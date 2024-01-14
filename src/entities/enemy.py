@@ -18,6 +18,7 @@ class Enemy(Entity):
     self.speed_rand_factor = 3
     self.new_speed = random.randrange(self.stats.get_speed() - self.speed_rand_factor, self.stats.get_speed() + self.speed_rand_factor)
     self.is_alive = True
+    self.opacity = 0
   
   
   def update(self, dt: float) -> None:
@@ -29,6 +30,11 @@ class Enemy(Entity):
   
   
   def draw(self, screen: Surface) -> None:
+    # slowly hide enemy after being reveal and out of range
+    if self.opacity > 0:
+      self.opacity -= 3
+    self.sprite.image.set_alpha(self.opacity)
+    
     screen.blit(self.sprite.image, (self.position.x, self.position.y), self.sprite.image_at)
 
 
@@ -49,3 +55,7 @@ class Enemy(Entity):
   def take_damage(self, damage_amount: int) -> None:
     if self.stats.get_health() > 0:
       self.stats.reduce_health(damage_amount)
+
+
+  def reveal(self) -> None:
+    self.opacity = 255
