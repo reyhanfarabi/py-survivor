@@ -12,7 +12,7 @@ class Game():
   def __init__(self) -> None:
     self.__kill_count = 0
     self.__enemy_wave = 0
-     
+
     self.player = Player(
       Sprite('assets/hooded_protagonist/spritesheets.png', Rect(0, 0, 32, 32)), 
       Vector2(100, 100),
@@ -20,7 +20,7 @@ class Game():
     )
     self.spawner = EnemySpawner(
       Sprite('assets/enemies/slime/slime_idle.png', Rect(0, 0, 32, 32)),
-      (1, 10, 20),
+      (1, 30, 20),
       self.player
     )
     
@@ -35,6 +35,7 @@ class Game():
     self.player.update(dt)
     
     self.player.attack_enemies(self.spawner.enemies_container)
+    self.player.reveal_enemies(self.spawner.enemies_container)
     
     # check if all enemy is dead
     if not self.spawner.enemies_container:

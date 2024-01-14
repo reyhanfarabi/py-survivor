@@ -72,3 +72,9 @@ class Player(Entity):
     if self.__weapon.can_attack(enemy) and time.time() > self.__attack_delay_counter:
       enemy.take_damage(self.stats.get_attack())
       self.__attack_delay_counter = time.time() + self.__ATACK_DELAY
+
+
+  def reveal_enemies(self, enemies: list) -> None:
+    for enemy in enemies:
+      if self.__weapon.can_attack(enemy):
+        enemy.reveal();
